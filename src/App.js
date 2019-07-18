@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-import updateFeature from './updateFeature.js';
 import './App.css';
-import Total from './Total/Total';
+import Header from './Header/Header'
+import Summary from './Summary/Summary'
 import Features from './Features/Features';
-import Summary from './Summary/Summary';
-
-updateFeature(feature, newValue) 
-  const selected = Object.assign({}, this.state.selected);
-  selected[feature] = newValue;
-  this.setState({
-    selected
-  });
 
 
-class App extends Component {
-  constructor(props){
-    super(props);
+class App extends React.Component {
+  constructor(state) {
+    super(state)
+    //console.log(props)
     this.state = {
       selected: {
         Processor: {
@@ -36,36 +29,37 @@ class App extends Component {
           }
       }
     }
+    this.updateFeature = this.updateFeature.bind(this)
   }
 
-  render() {      
+  updateFeature(feature, newValue) {
+    const selected = Object.assign({}, this.state.selected);
+    selected[feature] = newValue;
+    this.setState({
+      selected
+    });
+  }
+  
+  render() {
     return (
       <div className="App">
-        <header>
-          <h1>ELF Computing</h1>
-          <h3>Laptops</h3>
-          <h5>Customize your laptop</h5>  
-        </header>      
+        <Header />
         <main>
-          <section className="main__form">
+        <section className="main__form">
             <h3>TECH SPECS AND CUSTOMIZATIONS</h3>
-            <Features />
-          </section>
-          <section className="main__summary">
-            <h3>NEW GREENLEAF 2018</h3>
-            <Summary />
-            <div className="summary__total">
-              <div className="summary__total__label">Your Price: </div>
-              <div className="summary__total__value">
-              { new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
-                  .format(<Total />) }
-              </div>
-            </div>
-          </section>
+            <Features 
+            features={this.props.features}
+            update={(feature, newValue) => this.updateFeature(feature,newValue)}
+            onFeatureChange = {this.updateFeature}
+            selected={this.state.selected}
+            />
+            </section>
+          <Summary selected={this.state.selected} />
         </main>
       </div>
     );
-  }
+  }  
+
 }
 
 export default App;  
