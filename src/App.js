@@ -5,7 +5,7 @@ import Summary from './Summary/Summary'
 import Features from './Features/Features';
 
 
-class App extends React.Component {
+class App extends Component {
   constructor(state) {
     super(state)
     //console.log(props)
